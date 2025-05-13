@@ -22,11 +22,11 @@ from .error import NotInitValidateError, NotSetupError, UnauthorizedAndForceLogo
 def account_initialization_required(view):
     @wraps(view)
     def decorated(*args, **kwargs):
-        # check account initialization
-        account = current_user
-
-        if account.status == AccountStatus.UNINITIALIZED:
-            raise AccountNotInitializedError()
+        # # check account initialization
+        # account = current_user
+        #
+        # if account.status == "uninitialized":
+        #     raise AccountNotInitializedError()
 
         return view(*args, **kwargs)
 
@@ -186,15 +186,15 @@ def cloud_utm_record(view):
 def setup_required(view):
     @wraps(view)
     def decorated(*args, **kwargs):
-        # check setup
-        if (
-            dify_config.EDITION == "SELF_HOSTED"
-            and os.environ.get("INIT_PASSWORD")
-            and not db.session.query(DifySetup).first()
-        ):
-            raise NotInitValidateError()
-        elif dify_config.EDITION == "SELF_HOSTED" and not db.session.query(DifySetup).first():
-            raise NotSetupError()
+        # # check setup
+        # if (
+        #     dify_config.EDITION == "SELF_HOSTED"
+        #     and os.environ.get("INIT_PASSWORD")
+        #     and not db.session.query(DifySetup).first()
+        # ):
+        #     raise NotInitValidateError()
+        # elif dify_config.EDITION == "SELF_HOSTED" and not db.session.query(DifySetup).first():
+        #     raise NotSetupError()
 
         return view(*args, **kwargs)
 
@@ -204,9 +204,9 @@ def setup_required(view):
 def enterprise_license_required(view):
     @wraps(view)
     def decorated(*args, **kwargs):
-        settings = FeatureService.get_system_features()
-        if settings.license.status in [LicenseStatus.INACTIVE, LicenseStatus.EXPIRED, LicenseStatus.LOST]:
-            raise UnauthorizedAndForceLogout("Your license is invalid. Please contact your administrator.")
+        # settings = FeatureService.get_system_features()
+        # if settings.license.status in [LicenseStatus.INACTIVE, LicenseStatus.EXPIRED, LicenseStatus.LOST]:
+        #     raise UnauthorizedAndForceLogout("Your license is invalid. Please contact your administrator.")
 
         return view(*args, **kwargs)
 

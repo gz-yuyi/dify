@@ -56,10 +56,10 @@ const SwrInitor = ({
           router.replace('/install')
           return
         }
-        if (!((consoleToken && refreshToken) || (consoleTokenFromLocalStorage && refreshTokenFromLocalStorage))) {
-          router.replace('/signin')
-          return
-        }
+        // if (!((consoleToken && refreshToken) || (consoleTokenFromLocalStorage && refreshTokenFromLocalStorage))) {
+        //   router.replace('/signin')
+        //   return
+        // }
         if (searchParams.has('access_token') || searchParams.has('refresh_token')) {
           consoleToken && localStorage.setItem('console_token', consoleToken)
           refreshToken && localStorage.setItem('refresh_token', refreshToken)

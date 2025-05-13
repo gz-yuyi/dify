@@ -62,7 +62,7 @@ def init_app(app: DifyApp):
         clientside_cache_config = None
 
     redis_params: dict[str, Any] = {
-        "username": dify_config.REDIS_USERNAME,
+        "username": dify_config.REDIS_USERNAME or 'default',
         "password": dify_config.REDIS_PASSWORD or None,  # Temporary fix for empty password
         "db": dify_config.REDIS_DB,
         "encoding": "utf-8",
