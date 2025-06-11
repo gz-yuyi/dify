@@ -1,5 +1,8 @@
 # base image
 FROM python:3.12-slim-bookworm AS base
+# 配置双镜像加速
+ENV UV_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple \
+    UV_PYTHON_INSTALL_MIRROR=https://mirrors.aliyun.com/python
 
 WORKDIR /app/api
 
