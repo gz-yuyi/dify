@@ -18,9 +18,10 @@ FROM base AS packages
 RUN apt-get update \
     && apt-get install -y --no-install-recommends gcc g++ libc-dev libffi-dev libgmp-dev libmpfr-dev libmpc-dev
 
-# 配置双镜像加速
-ENV UV_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple \
+# 配置双镜像加速（阿里云）
+ENV UV_INDEX_URL=https://mirrors.aliyun.com/pypi/simple \
     UV_PYTHON_INSTALL_MIRROR=https://mirrors.aliyun.com/python
+
 # Install Python dependencies
 COPY pyproject.toml uv.lock ./
 RUN uv sync --locked
