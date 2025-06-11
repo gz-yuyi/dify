@@ -42,6 +42,7 @@ else {
   publicApiPrefix = 'http://localhost:5001/api' // avoid browser private mode api cross origin
   publicWebPrefix = 'http://localhost:3000'
   marketplaceApiPrefix = 'http://localhost:5002/api'
+    console.log(process.env)
 }
 
 if (process.env.NEXT_PUBLIC_MARKETPLACE_API_PREFIX && process.env.NEXT_PUBLIC_MARKETPLACE_URL_PREFIX) {
