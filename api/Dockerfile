@@ -24,7 +24,7 @@ ENV UV_INDEX_URL=https://mirrors.aliyun.com/pypi/simple \
 
 # Install Python dependencies
 COPY pyproject.toml uv.lock ./
-RUN uv sync --locked
+RUN uv sync
 
 # production stage
 FROM base AS production
