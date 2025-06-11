@@ -1,15 +1,13 @@
 # base image
 FROM python:3.12-slim-bookworm AS base
-# 配置双镜像加速
-ENV UV_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple \
-    UV_PYTHON_INSTALL_MIRROR=https://mirrors.aliyun.com/python
+
 
 WORKDIR /app/api
 
 # Install uv
 ENV UV_VERSION=0.6.14
 
-RUN pip install --no-cache-dir uv==${UV_VERSION}
+RUN pip install --no-cache-dir -i https://mirrors.aliyun.com/pypi/simple uv==${UV_VERSION}
 
 
 FROM base AS packages
@@ -20,6 +18,9 @@ FROM base AS packages
 RUN apt-get update \
     && apt-get install -y --no-install-recommends gcc g++ libc-dev libffi-dev libgmp-dev libmpfr-dev libmpc-dev
 
+# 配置双镜像加速
+ENV UV_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple \
+    UV_PYTHON_INSTALL_MIRROR=https://mirrors.aliyun.com/python
 # Install Python dependencies
 COPY pyproject.toml uv.lock ./
 RUN uv sync --locked
