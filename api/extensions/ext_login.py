@@ -10,6 +10,7 @@ from dify_app import DifyApp
 from libs.passport import PassportService
 from services.account_service import AccountService
 from extensions.ext_redis import redis_client
+
 login_manager = flask_login.LoginManager()
 
 
@@ -37,6 +38,9 @@ def load_user_from_request(request_from_flask_login):
     # user_id = decoded.get("user_id")
     account_id = redis_client.get("account")
     if not account_id:
+        account = AccountService.get_first_account()
+        print("account:" + account)
+        redis_client.set("account", account.id)
         raise ValueError("Invalid refresh token")
     logged_in_account = AccountService.load_logged_in_account(account_id=account_id.decode("utf-8"))
     return logged_in_account

@@ -394,6 +394,11 @@ class AccountService:
     def load_logged_in_account(*, account_id: str):
         return AccountService.load_user(account_id)
 
+    @staticmethod
+    def get_first_account():
+        account = db.session.query(Account).first()
+        return account
+
     @classmethod
     def send_reset_password_email(
         cls,
