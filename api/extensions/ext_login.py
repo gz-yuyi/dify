@@ -3,11 +3,14 @@ import json
 import flask_login  # type: ignore
 from flask import Response, request
 from flask_login import user_loaded_from_request, user_logged_in
-from werkzeug.exceptions import Unauthorized
+from werkzeug.exceptions import NotFound, Unauthorized
 
-import contexts
+from configs import dify_config
 from dify_app import DifyApp
+from extensions.ext_database import db
 from libs.passport import PassportService
+from models.account import Account, Tenant, TenantAccountJoin
+from models.model import EndUser
 from services.account_service import AccountService
 from extensions.ext_redis import redis_client
 
@@ -49,9 +52,13 @@ def load_user_from_request(request_from_flask_login):
 @user_logged_in.connect
 @user_loaded_from_request.connect
 def on_user_logged_in(_sender, user):
-    """Called when a user logged in."""
-    if user:
-        contexts.tenant_id.set(user.current_tenant_id)
+    """Called when a user logged in.
+
+    Note: AccountService.load_logged_in_account will populate user.current_tenant_id
+    through the load_user method, which calls account.set_tenant_id().
+    """
+    # tenant_id context variable removed - using current_user.current_tenant_id directly
+    pass
 
 
 @login_manager.unauthorized_handler
