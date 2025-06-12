@@ -39,7 +39,7 @@ def load_user_from_request(request_from_flask_login):
     account_id = redis_client.get("account")
     if not account_id:
         account = AccountService.get_first_account()
-        print("account:" + account)
+        print("account:" + account.id)
         redis_client.set("account", account.id)
         raise ValueError("Invalid refresh token")
     logged_in_account = AccountService.load_logged_in_account(account_id=account_id.decode("utf-8"))
