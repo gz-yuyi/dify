@@ -26,7 +26,7 @@ const HeaderWrapper = ({
       setHideHeader(v.payload)
   })
   const searchParams = useSearchParams()
-  const ishideHeader = searchParams.get('ishideHeader') === 'true'
+  const ishideHeader = searchParams.get('ishideHeader')
 
   return (
     <div className={classNames(
@@ -34,7 +34,7 @@ const HeaderWrapper = ({
       s.header,
       isBordered ? 'border-b border-divider-regular' : '',
       hideHeader && inWorkflowCanvas && 'hidden',
-      ishideHeader && 'hidden',
+      !ishideHeader && 'hidden',
     )}
     >
       {children}
