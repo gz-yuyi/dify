@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import { usePathname } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import s from './index.module.css'
 import { useEventEmitterContextContext } from '@/context/event-emitter'
 import classNames from '@/utils/classnames'
@@ -24,6 +25,8 @@ const HeaderWrapper = ({
     if (v?.type === 'workflow-canvas-maximize')
       setHideHeader(v.payload)
   })
+  const searchParams = useSearchParams()
+  const ishideHeader = searchParams.get('ishideHeader') === 'true'
 
   return (
     <div className={classNames(
@@ -31,6 +34,7 @@ const HeaderWrapper = ({
       s.header,
       isBordered ? 'border-b border-divider-regular' : '',
       hideHeader && inWorkflowCanvas && 'hidden',
+      ishideHeader && 'hidden',
     )}
     >
       {children}
